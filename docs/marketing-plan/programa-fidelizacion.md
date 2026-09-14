@@ -51,15 +51,18 @@ Esta es la capa que realmente mueve la aguja del plan (retención de crónicos),
 
 El reto real de un programa en 6 sucursales sin sistema central es que el cliente debe poder acumular y canjear **en cualquier sucursal**, no solo donde se inscribió.
 
-**Solución de arranque (Fase 1 — mes 1-3):**
-- El identificador del cliente es su **número de teléfono** (no una tarjeta física numerada) — así cualquier sucursal puede buscarlo.
-- Registro centralizado en una **hoja de cálculo compartida** (Google Sheets, editable desde el teléfono/computadora de cada sucursal): columnas mínimas — teléfono, nombre, sucursal de inscripción, fecha de inscripción, ¿tiene tratamiento crónico? (sí/no + cuál), puntos acumulados, fecha de última compra registrada.
-- En caja, el cajero pregunta el teléfono, lo busca o lo registra, y anota la compra. Esto añade fricción operativa — ver guion en la Sección 6 para minimizarla.
-- Tarjeta física opcional (con el teléfono impreso/escrito a mano) como recordatorio visual para el cliente, pero **el teléfono es la fuente de verdad**, no la tarjeta — así no se pierde el historial si se olvida la tarjeta.
+**Actualización (confirmado con la gerencia):** Grupo New Farmacias ya opera con **Profit** como sistema administrativo/punto de venta en las 6 sucursales. Esto cambia — y simplifica — el plan de arranque:
 
-**Fase 2 (cuando haya presupuesto — Q2/Q3 del plan):**
-- Migrar a una herramienta de fidelización ligera integrada al punto de venta (muchos sistemas de punto de venta para farmacias/retail en Latinoamérica ya incluyen módulo de puntos — vale la pena revisar si el sistema de punto de venta actual de New Farmacias ya tiene uno antes de comprar algo nuevo) o a un bot simple de WhatsApp que consulte puntos automáticamente.
-- Esto es una decisión abierta — ver Sección 8 de este documento.
+**Solución de arranque (Fase 1 — mes 1-3):**
+- El identificador del cliente sigue siendo su **número de teléfono** — pero ahora se captura directamente en Profit en cada venta, no en una hoja aparte. Esto requiere una sola orden operativa: que Profit pida/registre el teléfono en cada transacción (o al menos en la primera compra del cliente) en las 6 sucursales.
+- **No hace falta la hoja de cálculo manual de la Fase 1 original.** En su lugar, el reporte por punto de venta que exporte Profit (idealmente semanal o quincenal al inicio) es la fuente de datos: quién compró, en qué sucursal, qué monto, y con qué frecuencia — suficiente para calcular puntos y detectar la racha de 3 meses de la Capa B de forma retroactiva/periódica, sin necesitar que el sistema calcule los puntos en tiempo real todavía.
+- **Cómo se ve en caja al inicio:** el cajero pide el teléfono (ya sea porque Profit lo solicita en el flujo de venta, o como paso adicional del guion de la Sección 5) — el cálculo de puntos y la detección de canjes se procesan por lotes (tú o el/la Coordinador(a) de Marketing revisan el reporte y determinan quién califica para beneficio), no en el momento exacto de cada compra. Es un paso intermedio razonable mientras se decide si vale la pena automatizar el cálculo dentro de Profit o con una hoja de cálculo que se alimente del reporte.
+- Tarjeta física opcional sigue siendo válida como recordatorio visual, pero el teléfono en Profit es la fuente de verdad.
+
+**Fase 2 (cuando haya presupuesto o cuando el volumen de datos lo justifique — Q2/Q3 del plan):**
+- Evaluar con el proveedor/soporte de Profit si el sistema tiene (o puede añadir) un módulo nativo de puntos/fidelización — si ya existe, es preferible a construir algo aparte.
+- Si Profit no lo soporta de forma nativa, considerar un bot simple de WhatsApp o una hoja de cálculo semi-automatizada que se alimente del reporte de Profit y calcule puntos y canjes automáticamente.
+- Esto sigue siendo una decisión abierta — ver Sección 10 de este documento.
 
 ---
 
@@ -100,11 +103,68 @@ Vale la pena correr estos números junto con la skill `anthropic-skills:comprado
 
 ## 7. Comunicación del lanzamiento
 
-- **En tienda:** cartel simple en caja/vitrina con el nombre del programa y la mecánica en una frase ("Acumula puntos en cada compra. Pregúntale a tu farmacéutico.").
-- **Redes sociales:** anuncio del lanzamiento como parte del calendario de contenido (Sección 4 del plan) — usar la skill `copywriting` o `social` para redactar el post.
-- **WhatsApp a clientes existentes:** mensaje corto a los clientes que ya tienen WhatsApp registrado informando del lanzamiento y cómo inscribirse en su próxima visita.
+Tres piezas, cada una con su rol: el **cartel** captura al cliente que ya está en tienda, el **post de redes** genera expectativa y alcance orgánico, y el **WhatsApp** activa de inmediato a los clientes que ya tienen relación con la farmacia (la conversión más fácil, porque ya confían en ustedes).
 
-*Plantillas de estos tres mensajes: puedo escribirlas ahora mismo si quieres — dímelo.*
+Todas usan el nombre de trabajo **"Club New Farmacias"** — reemplázalo si eliges otro nombre (Sección 2).
+
+### 7.1 Cartel en tienda (punto de venta / vitrina)
+
+Formato sugerido: una sola idea, tipografía grande, legible desde la fila de caja. Dos versiones — elige la que mejor combine con tu diseño (o dame el logo/colores y te ayudo a maquetarlo como imagen):
+
+**Versión A — enfoque beneficio:**
+> **CLUB NEW FARMACIAS**
+> Acumula puntos en cada compra.
+> Tu 2da compra ya tiene descuento.
+> Pregúntale a tu farmacéutico. Es gratis.
+
+**Versión B — enfoque crónicos (para sucursales con más tráfico de tratamientos):**
+> **¿Tratamiento de todos los meses?**
+> Únete al Club New Farmacias y no te quedes sin él.
+> Te avisamos, acumulas puntos y en el mes 4 tienes un beneficio extra.
+> Pregunta en caja.
+
+### 7.2 Post de lanzamiento en redes sociales (Instagram/Facebook)
+
+**Copy (versión corta, para carrusel o imagen única):**
+
+> 🎉 Ya llegó el Club New Farmacias
+>
+> Desde hoy, cada compra en cualquiera de nuestras 6 sucursales suma puntos para ti.
+>
+> ✅ Acumulas en cada compra
+> ✅ Descuento desde tu 2da visita
+> ✅ Si llevas un tratamiento de todos los meses, te lo recordamos por WhatsApp para que nunca te quedes sin él
+>
+> Inscríbete gratis en tu próxima visita — solo necesitas tu número de teléfono.
+>
+> 📍 Valencia y Naguanagua
+>
+> #NewFarmacias #ClubNewFarmacias
+
+**Idea visual:** foto del equipo en una de las sucursales entregando un producto, o una tarjeta/gráfico simple con el nombre del club y los 3 checks del copy. (Si quieres, uso la skill `image` para generar una propuesta gráfica.)
+
+**Variante para Stories (más corta, con sticker de pregunta "¿Ya te inscribiste?"):**
+> Desde hoy acumulas puntos en cada compra 🎉 Pregunta por el Club New Farmacias en cualquiera de nuestras 6 sucursales.
+
+### 7.3 Mensaje de WhatsApp a clientes existentes
+
+**Para la base general de contactos ya guardados:**
+> Hola [Nombre] 👋 Somos New Farmacias.
+>
+> Te contamos que ya lanzamos el *Club New Farmacias*: desde ahora acumulas puntos en cada compra y tienes descuento desde tu segunda visita.
+>
+> Si llevas un tratamiento de todos los meses, también podemos avisarte antes de que se te acabe — para que nunca te quedes sin él.
+>
+> Solo pásate por cualquiera de nuestras sucursales e inscríbete, es gratis 🙂
+
+**Variante específica para clientes ya identificados como crónicos (más dirigida):**
+> Hola [Nombre] 👋 Desde hoy, tu farmacia de siempre tiene el *Club New Farmacias*.
+>
+> Como sabemos que llevas un tratamiento mensual, te avisaremos por aquí unos días antes de que se te acabe, para que no tengas que buscarlo en otro lado.
+>
+> Además acumulas puntos en cada compra. Solo confírmanos tu inscripción en tu próxima visita.
+
+**Nota de tono:** los mensajes evitan sonar a publicidad masiva (no hay "¡OFERTA!" ni urgencia artificial) — es coherente con la voz de marca definida en el plan (cercana, de confianza, como el farmacéutico que te conoce). Ajusta el nivel de formalidad ("tú" vs "usted") según cómo hable normalmente el equipo con los clientes.
 
 ---
 
@@ -134,7 +194,7 @@ Vale la pena correr estos números junto con la skill `anthropic-skills:comprado
 
 1. **Nombre final del programa** — elegir entre las 3 opciones de la Sección 2 o proponer otro.
 2. **Tasa de acumulación y umbral de canje reales** — depende del ticket promedio y margen real (Sección 6) — hoy son números de ejemplo.
-3. **¿El sistema de punto de venta actual ya tiene módulo de fidelización?** — vale la pena revisarlo antes de construir la hoja de cálculo manual; podría ahorrar el paso de Fase 1.
+3. **¿Profit tiene o puede tener módulo nativo de puntos/fidelización?** — confirmado que Profit captura el teléfono y da reporte por punto de venta (resuelve la parte de identificación de cliente); falta confirmar con el proveedor si puede automatizar el cálculo de puntos/canjes o si eso se sigue procesando por fuera (hoja de cálculo alimentada por el reporte) al menos en Fase 1.
 4. **¿Tarjeta física sí o no?** — no es indispensable (el teléfono es suficiente), pero puede ayudar a que el cliente recuerde el programa visualmente. Decisión de preferencia, no técnica.
 
 ---
